@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   # patch "contacts/:id/update", to: "contacts#update", as: 'update_contact'
   # delete "contacts/:id/destroy", to: "contacts#destroy", as: 'destroy_contact'
   resources :contacts, except: [:show]
+  root 'contacts#index'
 end
