@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
-
+gem 'paperclip', '~> 6.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
