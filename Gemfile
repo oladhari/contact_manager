@@ -34,6 +34,7 @@ gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'paperclip', '~> 6.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'jasny-bootstrap-rails', '~> 3.1', '>= 3.1.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
