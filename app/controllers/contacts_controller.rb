@@ -2,17 +2,7 @@ class ContactsController < ApplicationController
   before_action :find_contact, only: [ :edit, :update, :destroy]
   def index
     session[:selected_group_id] = params[:group_id]
-    if params[:group_id] && !params[:group_id].empty?
-      # @contacts = Contact.where(group_id: params[:group_id]).order(created_at: :desc).page(params[:page])
-      group = Group.find(params[:group_id])
-      if params[:term] && !params[:term].empty?
-        @contacts = group.contacts.where("name ILIKE ?", "%#{params[:term]}%").order(created_at: :desc).page(params[:page])
-      else
-        @contacts = group.contacts.order(created_at: :desc).page(params[:page])
-      end
-    else
-      @contacts = Contact.where("name ILIKE ?", "%#{params[:term]}%").order(created_at: :desc).page(params[:page])
-    end
+    @contacts = Contact.by_group(params[:group_id]).search(params[:term]).order(created_at: :desc).page(params[:page])
   end
 
   def new
