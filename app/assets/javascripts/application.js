@@ -17,3 +17,14 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jasny-bootstrap.min
+//= require jquery-ui
+
+$(function(){
+  $('#term').autocomplete({
+    source: "/contacts/autocomplete",
+    minlength: 3,
+    select: function (event, ui) {
+      $('#term').val(ui.item.value);
+    }
+  });
+});
