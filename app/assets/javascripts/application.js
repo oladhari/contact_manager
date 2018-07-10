@@ -25,6 +25,43 @@ $(function(){
     minlength: 3,
     select: function (event, ui) {
       $('#term').val(ui.item.value);
+      $(this).closest('form').submit();
     }
   });
+});
+
+$(function() {
+  $("#add-new-group").hide();
+    $('#add-group-btn').click(function () {
+    $("#add-new-group").slideToggle(function() {
+      $('#new_group').focus();
+    });
+    return false;
+    });
+    $("#save-group-btn").click(function(event){
+      event.preventDefault();
+      var newGroup = $('#new_group')
+      $.ajax({
+        url: "/groups",
+        method: "post",
+        data: {
+          group: { name: $("#new_group").val()}
+        },
+        success: function(response) {
+          console.log(response);
+        },
+        error: function (xhr) {
+          var errors = xhr.responseJSON;
+          var error = errors.join(", ");
+          if (error) {
+            var inputGroup = newGroup.closest('.input-group');
+            inputGroup.next('.text-danger').remove();
+
+            inputGroup
+              .addClass('has-error')
+              .after('<p class="text-danger">' + error + '</p>');
+          }
+        }
+      });
+    });
 });
