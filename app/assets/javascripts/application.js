@@ -19,7 +19,7 @@
 //= require jasny-bootstrap.min
 //= require jquery-ui
 
-$(function(){
+$(document).on("turbolinks:load", function(){
   $('#term').autocomplete({
     source: "/contacts/autocomplete",
     minlength: 3,
@@ -30,7 +30,7 @@ $(function(){
   });
 });
 
-$(function() {
+$(document).on("turbolinks:load", function(){
   $("#add-new-group").hide();
     $('#add-group-btn').click(function () {
     $("#add-new-group").slideToggle(function() {
@@ -41,20 +41,29 @@ $(function() {
     $("#save-group-btn").click(function(event){
       event.preventDefault();
       var newGroup = $('#new_group')
+      var inputGroup = newGroup.closest('.input-group');
       $.ajax({
         url: "/groups",
         method: "post",
         data: {
           group: { name: $("#new_group").val()}
         },
-        success: function(response) {
-          console.log(response);
+        success: function(group) {
+          if (group.id != null)
+            inputGroup.removeClass('has-error');
+            inputGroup.next('.text-danger').remove();
+
+            var newOption = $("<option />")
+                              .attr("value", group.id)
+                              .attr("selected", true)
+                              .text(group.name);
+            $("#contact_group_id").append(newOption);
+            newGroup.val("");
         },
         error: function (xhr) {
           var errors = xhr.responseJSON;
           var error = errors.join(", ");
           if (error) {
-            var inputGroup = newGroup.closest('.input-group');
             inputGroup.next('.text-danger').remove();
 
             inputGroup
